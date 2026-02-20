@@ -107,24 +107,24 @@ export default function EnrollmentPage() {
   const getStatusBadge = (status: string) => {
     const styles: Record<string, { bg: string; text: string; icon: React.ReactNode }> = {
       COMPLETED: { 
-        bg: 'bg-green-100', 
+        bg: 'badge-success', 
         text: 'text-green-700',
         icon: <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
       },
       IN_PROGRESS: { 
-        bg: 'bg-blue-100', 
-        text: 'text-blue-700',
+        bg: 'badge-primary', 
+        text: 'text-primary',
         icon: <svg className="w-3.5 h-3.5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
       },
       PENDING: { 
-        bg: 'bg-yellow-100', 
+        bg: 'badge-warning', 
         text: 'text-yellow-700',
         icon: <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
       },
     };
     const style = styles[status] || styles.PENDING;
     return (
-      <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold ${style.bg} ${style.text}`}>
+      <span className={`badge ${style.bg} inline-flex items-center gap-1.5 ${style.text === 'text-primary' ? '' : style.text}`}>
         {style.icon}
         {status.replace('_', ' ')}
       </span>
@@ -208,60 +208,44 @@ export default function EnrollmentPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Enrollment Details</h1>
-            <p className="text-sm text-gray-500 break-all mt-1 font-mono bg-gray-100 px-2 py-1 rounded">{workflowId}</p>
           </div>
-          {getStatusBadge(enrollment.state.status)}
+          <div className="flex flex-col sm:items-end gap-1">
+            {getStatusBadge(enrollment.state.status)}
+            <span className="text-sm text-gray-500">
+              Version: <span className="font-medium text-gray-900">{enrollment.state.stepsVersion}</span>
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Info Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 animate-fade-in stagger-1">
-        {/* Contact Card */}
-        <div className="card p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Contact Card */}
+      <div className="animate-fade-in stagger-1">
+        <div className="card p-4 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
             <h3 className="font-semibold text-gray-900">Contact</h3>
+            <span className="text-lg font-medium text-gray-900 ml-2">{enrollment.contactEmail}</span>
           </div>
-          <p className="text-lg font-medium text-gray-900">{enrollment.contactEmail}</p>
         </div>
 
-        {/* Cadence Card */}
-        <div className="card p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-            </div>
-            <h3 className="font-semibold text-gray-900">Cadence</h3>
-          </div>
-          <p className="text-lg font-medium text-gray-900">{enrollment.cadenceId}</p>
-        </div>
-
-        {/* Progress Card */}
-        <div className="card p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <div className={`p-2 rounded-lg ${isCompleted ? 'bg-green-100' : 'bg-blue-100'}`}>
-              <svg className={`w-5 h-5 ${isCompleted ? 'text-green-600' : 'text-blue-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <h3 className="font-semibold text-gray-900">Progress</h3>
-          </div>
-          <div className="flex items-end gap-2">
-            <span className="text-3xl font-bold text-gray-900">{progressPercent}%</span>
-            <span className="text-sm text-gray-500 mb-1">
-              {isCompleted ? 'Complete' : `Step ${Math.min(currentStep + 1, totalSteps)} of ${totalSteps}`}
+        {/* Progress Bar */}
+        <div className="mb-4">
+          <div className="flex justify-between text-sm mb-2">
+            <span className="text-gray-500">
+              {isCompleted ? 'Complete' : `Step ${Math.min(currentStep, totalSteps)} of ${totalSteps}`}
             </span>
+            <span className="text-gray-700 font-semibold">{progressPercent}%</span>
           </div>
-          <div className="progress-bar mt-2">
+          <div className="progress-bar h-3">
             <div 
               className={`progress-bar-fill ${
-                isCompleted ? 'bg-gradient-to-r from-green-400 to-green-600' : 'bg-gradient-to-r from-blue-400 to-blue-600'
+                isCompleted 
+                  ? 'bg-gradient-to-r from-green-400 to-green-600' 
+                  : 'bg-gradient-to-r from-purple-500 to-indigo-600'
               }`}
               style={{ width: `${progressPercent}%` }}
             />
@@ -270,12 +254,7 @@ export default function EnrollmentPage() {
       </div>
 
       {/* Step Timeline */}
-      <div className="card overflow-hidden animate-fade-in stagger-2">
-        <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-4">
-          <h2 className="text-lg font-semibold text-white">Step Timeline</h2>
-          <p className="text-blue-100 text-sm">{isCompleted ? 'Completed workflow steps' : 'Manage workflow steps'}</p>
-        </div>
-        
+      <div className="animate-fade-in stagger-2">
         <div className="p-5">
           {isCompleted ? (
             /* View-only timeline for completed */
@@ -294,8 +273,8 @@ export default function EnrollmentPage() {
                       }`}>
                         {isCompletedStep ? '✓' : idx + 1}
                       </div>
-                      <div className={`flex-1 p-3 rounded-lg border ${
-                        isCompletedStep ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
+                      <div className={`flex-1 p-3 rounded-lg ${
+                        isCompletedStep ? 'bg-green-50' : 'bg-gray-50'
                       }`}>
                         <div className="flex items-center gap-2 mb-1">
                           <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
@@ -346,13 +325,13 @@ export default function EnrollmentPage() {
                       <div key={step.id || idx} className="relative flex gap-4 animate-fade-in" style={{ animationDelay: `${idx * 50}ms` }}>
                         {/* Step indicator */}
                         <div className={`relative z-10 flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
-                          isCurrent ? 'bg-blue-600 text-white animate-pulse' : 'bg-gray-300 text-gray-600'
+                          isCurrent ? 'bg-purple-600 text-white animate-pulse' : 'bg-gray-300 text-gray-600'
                         }`}>
                           {idx + 1}
                         </div>
                         
                         {/* Step content - Editable */}
-                        <div className={`flex-1 p-3 rounded-lg border ${isCurrent ? 'bg-blue-50 border-blue-300' : 'bg-gray-50 border-gray-200'}`}>
+                        <div className={`flex-1 p-3 rounded-lg ${isCurrent ? 'bg-purple-50' : 'bg-gray-50'}`}>
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
                               <button
@@ -366,7 +345,7 @@ export default function EnrollmentPage() {
                                 {step.type}
                               </button>
                               {isCurrent && (
-                                <span className="text-xs text-blue-600 font-medium">In Progress</span>
+                                <span className="text-xs text-purple-600 font-medium">In Progress</span>
                               )}
                               {isPending && (
                                 <span className="text-xs text-gray-500">Pending</span>
@@ -431,7 +410,7 @@ export default function EnrollmentPage() {
               <div className="mt-6 flex justify-center">
                 <button
                   onClick={addStep}
-                  className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-dashed border-gray-300 text-gray-500 rounded-lg hover:border-blue-400 hover:text-blue-500 transition-colors cursor-pointer"
+                  className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-dashed border-gray-300 text-gray-500 rounded-lg hover:border-purple-400 hover:text-purple-500 transition-colors cursor-pointer"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -445,7 +424,7 @@ export default function EnrollmentPage() {
                 <button
                   onClick={handleUpdate}
                   disabled={saving}
-                  className="btn btn-success w-full"
+                  className="btn btn-primary w-full"
                 >
                   {saving ? (
                     <>
