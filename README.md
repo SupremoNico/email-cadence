@@ -90,11 +90,6 @@ pnpm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-**Environment Variables:**
-```bash
-NEXT_PUBLIC_API_URL=http://localhost:3001
-```
-
 ---
 
 #### 2. NestJS API
@@ -104,15 +99,7 @@ cd apps/api
 pnpm run start:dev
 ```
 
-API runs on `http://localhost:3001` (or `PORT` environment variable).
-
-**Environment Variables:**
-```bash
-PORT=3001
-# Temporal.io (uses default connection if not specified)
-TEMPORAL_ADDRESS=<TEMPORAL_IO_SERVER_ADDRESS>
-TEMPORAL_NAMESPACE=<NAMESPACE>
-```
+API runs on `http://localhost:3001`.
 
 ---
 
@@ -124,14 +111,6 @@ pnpm run dev
 ```
 
 Worker listens on task queue `cadence-queue`.
-
-**Environment Variables:**
-```bash
-# Temporal.io (uses default connection if not specified)
-TEMPORAL_ADDRESS=<TEMPORAL_IO_SERVER_ADDRESS>
-TEMPORAL_NAMESPACE=<NAMESPACE>
-TEMPORAL_TASK_QUEUE=cadence-queue
-```
 
 ---
 
@@ -161,15 +140,6 @@ pnpm start:worker
 
 ## 🔌 Temporal.io Integration
 
-### Default Configuration
-
-The application uses Temporal.io's default connection. To customize, set these environment variables:
-
-```bash
-TEMPORAL_ADDRESS=localhost:7233    # Temporal server address
-TEMPORAL_NAMESPACE=default         # Your namespace
-```
-
 ### Task Queue
 
 The worker uses task queue: `cadence-queue`
@@ -193,15 +163,13 @@ The API uses the default Temporal client connection:
 const client = new WorkflowClient();  // Uses default connection
 ```
 
-To specify a custom Temporal server, set `TEMPORAL_ADDRESS` environment variable before creating the client.
-
 ---
 
 ## 📝 Notes
 
 - The API connects to Temporal using the default client connection
 - The worker uses task queue `cadence-queue` for processing email cadence workflows
-- The web frontend expects the API at `NEXT_PUBLIC_API_URL` (defaults to `http://localhost:3001`)
+- The web frontend expects the API at `http://localhost:3001`
 - All three apps must be running for the full email cadence system to work
 
 ---
