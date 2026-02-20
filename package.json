@@ -1,0 +1,21 @@
+{
+  "name": "email-cadence",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm dev:web & pnpm dev:api & pnpm dev:worker",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api start:dev",
+    "dev:worker": "pnpm --filter worker dev",
+    "build": "pnpm --filter web build && pnpm --filter api build && pnpm --filter worker build",
+    "start:web": "pnpm --filter web start",
+    "start:api": "pnpm --filter api start",
+    "start:worker": "pnpm --filter worker start"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "turbo": "^2.8.10",
+    "typescript": "^5.9.3"
+  }
+}

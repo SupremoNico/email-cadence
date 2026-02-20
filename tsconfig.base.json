@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["apps/api/src/*"],
+      "@web/*": ["apps/web/src/*"],
+      "@worker/*": ["apps/worker/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
