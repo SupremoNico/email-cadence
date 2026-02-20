@@ -11,7 +11,7 @@ const EMAIL_DELAY_SECONDS = 3;
 
 // Workflow types
 export interface CadenceStep {
-  id: string;
+  id: number;
   type: 'SEND_EMAIL' | 'WAIT';
   subject?: string;
   body?: string;

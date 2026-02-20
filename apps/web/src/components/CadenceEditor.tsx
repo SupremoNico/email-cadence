@@ -173,8 +173,13 @@ export default function CadenceEditor({ initialSteps, onChange }: Props) {
 
   function handleDeleteStep(index: number) {
     const updated = steps.filter((_, i) => i !== index);
-    setSteps(updated);
-    onChange(updated);
+    // Re-number steps to maintain sequential IDs
+    const renumbered = updated.map((step, i) => ({
+      ...step,
+      id: i + 1,
+    }));
+    setSteps(renumbered);
+    onChange(renumbered);
   }
 
   function handleDragEnd(event: DragEndEvent) {
@@ -185,13 +190,19 @@ export default function CadenceEditor({ initialSteps, onChange }: Props) {
       const newIndex = steps.findIndex((s) => s.id === over.id);
       
       const newSteps = arrayMove(steps, oldIndex, newIndex);
-      setSteps(newSteps);
-      onChange(newSteps);
+      // Re-number steps to maintain sequential IDs after reorder
+      const renumbered = newSteps.map((step, i) => ({
+        ...step,
+        id: i + 1,
+      }));
+      setSteps(renumbered);
+      onChange(renumbered);
     }
   }
 
   function addStep() {
-    const newStep: CadenceStep = { id: `${Date.now()}`, type: 'SEND_EMAIL', subject: '', body: '' };
+    const newStepId = steps.length + 1;
+    const newStep: CadenceStep = { id: newStepId, type: 'SEND_EMAIL', subject: '', body: '' };
     const updated = [...steps, newStep];
     setSteps(updated);
     onChange(updated);

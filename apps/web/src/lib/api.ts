@@ -2,8 +2,8 @@
 export const API_URL = 'http://localhost:3001';
 
 export type CadenceStep =
-  | { id: string; type: 'WAIT'; seconds: number }
-  | { id: string; type: 'SEND_EMAIL'; subject: string; body: string };
+  | { id: number; type: 'WAIT'; seconds: number }
+  | { id: number; type: 'SEND_EMAIL'; subject: string; body: string };
 
 export interface Cadence {
   id: string;
@@ -69,7 +69,7 @@ export async function updateEnrollment(workflowId: string, steps: CadenceStep[])
 }
 
 export async function createCadence(name: string): Promise<Cadence> {
-  const id = `cadence_${Date.now()}`;
+  const id = `cad_${Date.now()}`;
   const res = await fetch(`${API_URL}/cadences`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

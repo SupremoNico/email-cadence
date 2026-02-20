@@ -1,6 +1,6 @@
 export type CadenceStep =
-  | { id: string; type: 'WAIT'; seconds: number }
-  | { id: string; type: 'SEND_EMAIL'; subject: string; body: string };
+  | { id: number; type: 'WAIT'; seconds: number }
+  | { id: number; type: 'SEND_EMAIL'; subject: string; body: string };
 
 export interface Cadence {
   id: string;

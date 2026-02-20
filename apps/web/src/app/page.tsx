@@ -51,7 +51,7 @@ export default function HomePage() {
         const sortedEnrollments = [...enrollments].sort((a: any, b: any) => {
           // Get timestamp from workflowId (format: cadence_timestamp)
           const getTimestamp = (enrollment: any) => {
-            const match = enrollment.workflowId.match(/cadence_(\d+)/);
+            const match = enrollment.workflowId.match(/cad_(\d+)/);
             return match ? parseInt(match[1]) : 0;
           };
 
