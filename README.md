@@ -62,36 +62,6 @@ temporal server start-dev
 
 ---
 
-## 🔧 Environment Configuration
-
-### Required Environment Variables
-
-Create a `.env` file in the root directory with the following variables:
-
-```bash
-# Temporal.io Configuration
-# Replace these placeholders with your actual Temporal.io settings
-
-TEMPORAL_ADDRESS=<TEMPORAL_IO_SERVER_ADDRESS>
-TEMPORAL_NAMESPACE=<NAMESPACE>
-
-# API Configuration (optional, defaults shown)
-API_PORT=3001
-
-# Web Configuration
-NEXT_PUBLIC_API_URL=http://localhost:3001
-```
-
-### Configuration Placeholders
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `TEMPORAL_ADDRESS` | Temporal.io server address | `localhost:7233` or `your-namespace.tm.prd.sh` |
-| `TEMPORAL_NAMESPACE` | Temporal namespace | `default` or `email-cadence-namespace` |
-| `TEMPORAL_TASK_QUEUE` | Task queue name | `cadence-queue` |
-
----
-
 ## 🏃 Running Each App
 
 ### Option 1: Run All Apps Concurrently
